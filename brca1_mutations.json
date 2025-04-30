@@ -1,0 +1,12 @@
+{
+    "c.68_69delAG": {"type": "del", "pos": 68, "length": 2},
+    "c.5266dupC": {"type": "ins", "pos": 5266, "base": "C"},
+    "c.181T>G": {"type": "sub", "pos": 181, "base": "G"},
+    "c.4035delA": {"type": "del", "pos": 4035, "length": 1},
+    "c.3481_3491del11": {"type": "del", "pos": 3481, "length": 11},
+    "c.3700_3704delGTAAA": {"type": "del", "pos": 3700, "length": 5},
+    "c.3756_3759delGTCT": {"type": "del", "pos": 3756, "length": 4},
+    "c.211A>G": {"type": "sub", "pos": 211, "base": "G"},
+    "c.4484G>T": {"type": "sub", "pos": 4484, "base": "T"},
+    "c.5154G>A": {"type": "sub", "pos": 5154, "base": "A"}
+}
