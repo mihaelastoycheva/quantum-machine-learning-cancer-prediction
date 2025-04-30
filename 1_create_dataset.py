@@ -1,3 +1,5 @@
+import json
+
 from Bio import Entrez, SeqIO
 import pandas as pd
 
@@ -10,18 +12,16 @@ refseq_ids = {
     "BRCA2": "NM_000059.4"
 }
 
-# Real mutation from ClinVar
-mutations = {
-    "BRCA1": {
-        "c.68_69delAG": {"type": "del", "pos": 68, "length": 2},
-        "c.5266dupC": {"type": "ins", "pos": 5266, "base": "C"}
-    },
-    "BRCA2": {
-        "c.5946delT": {"type": "del", "pos": 5946, "length": 1},
-        "c.3919delG": {"type": "del", "pos": 3919, "length": 1}
-    }
-}
+# Load mutations from JSON files
+def load_mutations_from_json(file_path):
+    with open(file_path, 'r') as file:
+        return json.load(file)
 
+
+mutations = {
+    "BRCA1": load_mutations_from_json("brca1_mutations.json"),
+    "BRCA2": load_mutations_from_json("brca2_mutations.json")
+}
 
 # Function to download the reference sequence
 def fetch_reference_sequence(refseq_id):
@@ -35,11 +35,11 @@ def fetch_reference_sequence(refseq_id):
 dataset = []
 
 for gene, refseq_id in refseq_ids.items():
-    print(f"⬇️ Download the reference sequence for {gene}")
+    print(f"⬇️ Downloading the reference sequence for {gene}")
     reference_seq = fetch_reference_sequence(refseq_id)
 
     for mut_name, mut_info in mutations[gene].items():
-        print(f"⚙️ Process the mutation: {mut_name} for {gene}")
+        print(f"⚙️ Processing mutation: {mut_name} | {gene}")
 
         # Take 100 nucleotides around the mutation
         pos = mut_info["pos"]
@@ -64,6 +64,8 @@ for gene, refseq_id in refseq_ids.items():
             del seq_list[local_pos:local_pos + mut_info["length"]]
         elif mut_info["type"] == "ins":
             seq_list.insert(local_pos, mut_info["base"])
+        elif mut_info["type"] == "sub":
+            seq_list[local_pos] = mut_info["base"]
 
         mutated_seq = ''.join(seq_list)
 
@@ -74,7 +76,7 @@ for gene, refseq_id in refseq_ids.items():
             "mutation": mut_name
         })
 
-# Save the dataset in CVS file
+# Save the dataset to CVS
 df = pd.DataFrame(dataset)
 df.to_csv("classical_dataset.csv", index=False)
 
