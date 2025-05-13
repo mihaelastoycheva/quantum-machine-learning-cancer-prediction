@@ -12,8 +12,8 @@ y = np.load('y_labels.npy')
 print("Shape of X:", X.shape)
 print("Shape of y:", y.shape)
 
-print("X entries:\n", X[:8])
-print("y labels:\n", y[:8])
+print("X entries:\n", X[:20])
+print("y labels:\n", y[:10])
 
 # ------------------------------- Save in file
 
