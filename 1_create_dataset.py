@@ -19,8 +19,8 @@ def load_mutations_from_json(file_path):
 
 
 mutations = {
-    "BRCA1": load_mutations_from_json("brca1_mutations.json"),
-    "BRCA2": load_mutations_from_json("brca2_mutations.json")
+    "BRCA1": load_mutations_from_json("brca1_mutations_expanded.json"),
+    "BRCA2": load_mutations_from_json("brca2_mutations_expanded.json")
 }
 
 # Function to download the reference sequence
